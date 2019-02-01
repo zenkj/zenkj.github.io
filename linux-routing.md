@@ -6,16 +6,14 @@
 路由表是一个列表，列表的每一项包含了目标地址或地址段，对应的网关地址，出口网卡，以及一些其他配置
 信息。比如：
 
-···shell
-jzjian@k8s-05:~$ route -n
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
-0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eth0
-42.120.18.112   192.168.0.1     255.255.255.255 UGH   0      0        0 eth1
-169.254.169.254 192.168.0.1     255.255.255.255 UGH   100    0        0 eth0
-192.168.0.0     0.0.0.0         255.255.255.0   U     100    0        0 eth0
-192.168.0.0     0.0.0.0         255.255.255.0   U     101    0        0 eth1
-···
+  jzjian@k8s-05:~$ route -n
+  Kernel IP routing table
+  Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+  0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eth0
+  42.120.18.112   192.168.0.1     255.255.255.255 UGH   0      0        0 eth1
+  169.254.169.254 192.168.0.1     255.255.255.255 UGH   100    0        0 eth0
+  192.168.0.0     0.0.0.0         255.255.255.0   U     100    0        0 eth0
+  192.168.0.0     0.0.0.0         255.255.255.0   U     101    0        0 eth1
 
 路由表中有8项数据，最重要的是目的地址（Destination），掩码（Genmask），网关（Gateway）
 以及出口网卡（Iface）。Flags中U是Up之意，G是说有网关，H说明这个目标地址是一个单独的
@@ -37,12 +35,10 @@ linux中可以有32768个路由策略项，每一项都有一个id，linux会从
 
 linux默认创建三个路由策略项，分别为路由策略项0，路由策略项32766和路由策略项32767，查看如下：
 
-···shell
-jzjian@k8s-05:~$ ip rule list
-0:	from all lookup local 
-32766:	from all lookup main 
-32767:	from all lookup default 
-···
+  jzjian@k8s-05:~$ ip rule list
+  0:	from all lookup local 
+  32766:	from all lookup main 
+  32767:	from all lookup default 
 
 这三个策略项分别选择local路由表，main路由表和default路由表，查看/etc/iproute2/rt_tables文件，
 会发现这三个路由表的id分别是255，254和253。其中local路由表由linux内核自动管理，main路由表是
