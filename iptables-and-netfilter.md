@@ -1,3 +1,9 @@
 # iptables和netfilter
 
 # netfilter和linux路由处理的关系
+
+在最初接触iptables/netfilter时，经常对netfilter做的事和linux网络栈的路由处理逻辑感到疑惑，
+感觉他们做了类似的事。实际上netfilter和linux路由处理完全不同。linux路由处理是根据路由策略
+和路由表判断一个ip包应该怎么走的逻辑，而netfilter不会修改这个逻辑，只是在这个处理流程的不同
+位置，添加了不同的回调钩子，这些回调钩子以iptables规则链的形式存在，规则链中的规则可以通过
+修改源ip地址和目的ip地址，从而影响linux路由处理的结果，但是这些规则本身，不会做路由处理的事情。
